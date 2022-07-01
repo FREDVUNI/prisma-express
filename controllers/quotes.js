@@ -44,17 +44,17 @@ exports.addQuote = async (req,res) =>{
 exports.getQuote = async (req,res) =>{
     try{
         const id = await req.params.id
-
-        if(id){
-            const quote = await prisma.quote.findUnique({
-                where:{
-                    id:Number(id)
-                },
-                include:{
-                    author:true
-                }
-            })
-            res.status(200).json({message:`Quote id ${id}`,quote:quote})
+        const quote = await prisma.quote.findUnique({
+            where:{
+                id:Number(id)
+            },
+            include:{
+                author:true
+            }
+        })
+           
+        if(quote){
+             res.status(200).json({message:`Quote id ${id}`,quote})
         }else{
             res.status(404).json(`The id does not exist.`)
         }
@@ -67,23 +67,23 @@ exports.getQuote = async (req,res) =>{
 exports.updateQuote = async (req,res) =>{
     try{
         const id = await req.params.id
-        
-        if(id){
-            const {text} = req.body
-            if(Object.keys(req.body.text).length !== 0 || Object.keys(req.body.authorId).length !== 0){
-                const quote = await prisma.quote.update({
-                    data:{text},
-                    where:{
-                        id:Number(id)
-                    }
-                })
-                res.status(200).json({message:"Quote has been updated.",quote:quote})
+
+        if(Object.keys(req.body.text).length !== 0 || Object.keys(req.body.authorId).length !== 0){
+            const quote = await prisma.quote.update({
+                data:req.body,
+                where:{
+                    id:Number(id)
+                }
+            })
+            if(quote){
+                res.status(200).json({message:"Quote has been updated.",quote})    
             }else{
-                res.status(400).json(`All fields are required.`)
+                res.status(404).json(`The id does not exist.`)
             }
         }else{
-            res.status(404).json(`The id does not exist.`)
+            res.status(400).json(`All fields are required.`)
         }
+        
     }
     catch(error){
         res.status(500).json({error:error.message || "There was an error."})
@@ -93,14 +93,15 @@ exports.updateQuote = async (req,res) =>{
 exports.deleteQuote = async (req,res) =>{
     try{
         const id = await req.params.id
+        const quote = await prisma.quote.delete({
+            where:{
+                id:Number(id)
+            }
+        })
 
-        if(id){
-            const quote = await prisma.quote.delete({
-                where:{
-                    id:Number(id)
-                }
-            })
-            res.status(200).json({message:"Quote has been deleted.",quote:quote})
+        if(quote){
+            res.status(200).json({message:"Quote has been deleted.",quote})
+        
         }else{
             res.status(404).json(`The id does not exist.`)
         }
