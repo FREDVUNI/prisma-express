@@ -12,7 +12,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(cors())
 
 app.use("/quotes",require("./routes/quotes"))
-app.use("/authors",require("./routes/authors"))
+app.use("/authors",require("./routes/authors"))  
 
 const PORT = process.env.PORT || 8080
 
