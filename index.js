@@ -1,6 +1,7 @@
 const express = require("express")
 const app = express()
 const dotenv = require("dotenv")
+const cors = require("cors")
 const morgan = require("morgan")
 dotenv.config({path:".env"})
 
@@ -8,6 +9,7 @@ dotenv.config({path:".env"})
 app.use(morgan("tiny"))
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
+app.use(cors())
 
 app.use("/quotes",require("./routes/quotes"))
 app.use("/authors",require("./routes/authors"))
