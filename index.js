@@ -13,6 +13,7 @@ app.use(cors())
 
 app.use("/quotes",require("./routes/quotes"))
 app.use("/authors",require("./routes/authors"))  
+app.use("/users",require("./routes/users"))  
 
 const PORT = process.env.PORT || 5000
 

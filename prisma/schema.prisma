@@ -22,3 +22,9 @@ model Author {
   name   String  @unique
   quotes Quote[]
 }
+
+model User {
+  id Int @id @default(autoincrement())
+  username String @unique
+  password String
+}
