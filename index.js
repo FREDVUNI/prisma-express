@@ -11,9 +11,9 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors())
 
-app.use("/quotes",require("./routes/quotes"))
-app.use("/authors",require("./routes/authors"))  
-app.use("/users",require("./routes/users"))  
+app.use("/api/v1/quotes",require("./routes/quotes"))
+app.use("/api/v1/authors",require("./routes/authors"))  
+app.use("/api/v1/users",require("./routes/users"))  
 
 const PORT = process.env.PORT || 5000
 
