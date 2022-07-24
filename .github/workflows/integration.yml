@@ -4,6 +4,7 @@ name: Continuous Integration
 # what triggers the integration ,its triggered on pull requests merged to the main branch
 # ci/cd - executes some instructed tasks.
 #runner is a build instance which is used to run the jobs over multiple machines and send the results
+#A job is a set of steps in a workflow that execute on the same runner.
 
 on:
   pull_request:
