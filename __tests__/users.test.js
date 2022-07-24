@@ -27,7 +27,6 @@ beforeAll(async()=>{
     })
 })
 
-
 test('should get all the users',async()=>{
     await request(app)
     .get('/api/v1/users')
@@ -54,7 +53,6 @@ test("Should delete account for user",async()=>{
 test("Should not delete account by unauthenticated user",async()=>{
     await request(app)
     .delete('/api/v1/users/22')  
-    .set({Authorization:`${token}`}) 
     .expect(500)
 })
 
