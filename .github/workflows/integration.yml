@@ -11,7 +11,7 @@ on:
     branches: [main]
 
 env:
-  DATABASE_URL:postgresql://postgres:vuni@localhost:5432/quotesdb?schema=public    
+  DATABASE_URL: postgresql://postgres:vuni@localhost:5432/quotesdb?schema=public    
 
 #Runs on a linux container in the cloud, you must tell the container what to do.
 #The steps will either pass or fail but bad code is avoided
@@ -23,8 +23,7 @@ jobs:
 
     services:
       postgres:
-        image: 
-          postgres:14-alpine
+        image: postgres:14-alpine
           env:
             POSTGRES_USER: postgres
             POSTGRES_PASSWORD: vuni
@@ -32,10 +31,10 @@ jobs:
           ports:
             - 5432:5432
           options: >-
-            --health-cmd pg_isready    
-            --health-interval 10s    
-            --health-timeout 5s    
-            --health-retires 5s    
+            --health-cmd pg_isready
+            --health-interval 10s
+            --health-timeout 5s
+            --health-retries 5    
 
       steps:
         - name: checkout code into runner
