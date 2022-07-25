@@ -26,23 +26,23 @@ jobs:
           --health-timeout 5s
           --health-retries 5    
 
-      steps:
-        - name: checkout code into runner
-          uses: actions/checkout@v2
+    steps:
+      - name: checkout code into runner
+        uses: actions/checkout@v2
 
-        - name: setup node on the runner
-          uses: actions/setup-node@v1
-          with:
-            node-version: 14 
+      - name: setup node on the runner
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14 
 
-        - name: Install project dependencies
-          run: npm ci
+      - name: Install project dependencies
+        run: npm ci
 
-        - name: Run database migration files
-          run: npm run db-migrate
+      - name: Run database migration files
+        run: npm run db-migrate
 
-        - name: Run unit tests
-          run: npm test
+      - name: Run unit tests
+        run: npm test
 
 
 
