@@ -52,7 +52,7 @@ test("Should delete account for user",async()=>{
 
 test("Should not delete account by unauthenticated user",async()=>{
     await request(app)
-    .delete('/api/v1/users/22')  
+    .delete('/api/v1/users/20')  
     .expect(500)
 })
 
