@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 app.use(cors())
 
-app.get('/api/v1/', (req, res)=>{
+app.get('/', (req, res)=>{
     res.status(200).json({
         status:200, 
         message:"API for quotes and authors. Check out the documentation below🐻",
