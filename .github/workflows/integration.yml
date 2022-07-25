@@ -43,7 +43,7 @@ jobs:
         - name: setup node on the runner
           uses: actions/setup-node@v1
           with:
-            node-version:14 
+            node-version: 14 
 
         - name: Install project dependencies
           run: npm ci
