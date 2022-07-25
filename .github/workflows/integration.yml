@@ -1,11 +1,4 @@
 name: Continuous Integration
-# DevOps ,test and release,deploy your code in small steps so basically,your able to know if there are issues before certain triggers like before merging
-# test deploy built in package.json -- scripts are automated
-# what triggers the integration ,its triggered on pull requests merged to the main branch
-# ci/cd - executes some instructed tasks.
-# runner is a build instance which is used to run the jobs over multiple machines and send the results
-# A job is a set of steps in a workflow that execute on the same runner.
-
 on:
   pull_request:
     branches: [main]
