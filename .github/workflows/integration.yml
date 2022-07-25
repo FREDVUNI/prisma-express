@@ -46,10 +46,10 @@ jobs:
             node-version:14 
 
         - name: Install project dependencies
-          uses: npm ci
+          run: npm ci
 
         - name: Run database migration files
-          uses: npm run db-migrate
+          run: npm run db-migrate
 
         - name: Run unit tests
           run: npm test

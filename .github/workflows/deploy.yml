@@ -1,0 +1,21 @@
+name: Continuous Deployment
+
+on:
+  push:
+    branches: [main]
+  
+
+jobs:
+  deploy-to-production:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code and add it to CI server
+        uses: actions/checkout@v2
+      
+      - name: Setup heroku deploy action
+        uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "prisma-quote-api"
+          heroku_email: "fredvuni809@gmail.com" 
