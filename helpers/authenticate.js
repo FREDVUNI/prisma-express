@@ -10,7 +10,7 @@ const authenticate = (req,res,next) =>{
                 if(err){
                     res.status(403).json("You\'re not authorized.")
                 }else{
-                    console.log(decoded)
+                    console.log(decoded)  
                     next()
                 }
             })
