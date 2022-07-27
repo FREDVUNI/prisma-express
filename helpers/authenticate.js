@@ -1,7 +1,7 @@
 const JWT = require("jsonwebtoken")
 
 const authenticate = (req,res,next) =>{
-    const authHeader = req.headers['Authorization']
+    const authHeader = req.headers['authorization']
     
     if(authHeader){
         if(authHeader.startsWith("Bearer")){
