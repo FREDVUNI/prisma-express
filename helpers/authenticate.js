@@ -1,7 +1,7 @@
 const JWT = require("jsonwebtoken")
 
 const authenticate = (req,res,next) =>{
-    const authHeader = req.headers['Authorization']
+    const authHeader = req.headers['authorization']
     
     if(authHeader){
         if(authHeader.startsWith("Bearer")){
@@ -10,7 +10,7 @@ const authenticate = (req,res,next) =>{
                 if(err){
                     res.status(403).json("You\'re not authorized.")
                 }else{
-                    console.log(decoded)
+                    console.log(decoded)  
                     next()
                 }
             })
