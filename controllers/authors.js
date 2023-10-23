@@ -1,115 +1,108 @@
-const {PrismaClient} = require("@prisma/client")
+const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 
-exports.getAuthors = async (req,res) =>{
-    try{
-        const authors = await prisma.author.findMany({
-            include:{quotes:true}
-        })
-        res.status(200).json({message:"All authors",data:authors})
+exports.getAuthors = async (req, res) => {
+  try {
+    const authors = await prisma.author.findMany({
+      include: { quotes: true },
+    });
+    res.status(200).json({ message: "All authors", data: authors });
+  } catch (error) {
+    res.status(404).json({ error: error.message || "There was an error." });
+  }
+};
+
+exports.addAuthor = async (req, res) => {
+  try {
+    const { name } = req.body;
+
+    const a = await prisma.author.findMany({});
+
+    const filterAuthor = a.some((item) => item.name == name);
+
+    if (!filterAuthor) {
+      if (Object.keys(req.body.name).length !== 0) {
+        const newAuthor = await prisma.author.create({
+          data: { name },
+        });
+        res
+          .status(200)
+          .json({ message: "Author has been added.", author: newAuthor });
+      } else {
+        res.status(400).json(`All fields are required.`);
+      }
+    } else {
+      res.status(400).json(`Author with this id already exists.`);
     }
-    catch(error){
-        res.status(404).json({error:error.message || "There was an error."})
+  } catch (error) {
+    res.status(400).json({ error: error.message || "There was an error." });
+  }
+};
+
+exports.getAuthor = async (req, res) => {
+  try {
+    const id = await req.params.id;
+
+    const author = await prisma.author.findUnique({
+      where: {
+        id: Number(id),
+      },
+      include: {
+        quotes: true,
+      },
+    });
+
+    if (author) {
+      res.status(200).json({ message: `Author id ${id}`, author: author });
+    } else {
+      res.status(404).json(`The id does not exist.`);
     }
-}
+  } catch (error) {
+    res.status(404).json({ error: error.message || "There was an error." });
+  }
+};
 
-exports.addAuthor = async (req,res) =>{
-    try{
-        const {name} = req.body
+exports.updateAuthor = async (req, res) => {
+  try {
+    const id = await req.params.id;
 
-        const a = await prisma.author.findMany({})
+    if (Object.keys(req.body.name).length !== 0) {
+      const author = await prisma.author.update({
+        data: req.body,
+        where: {
+          id: Number(id),
+        },
+      });
 
-        const filterAuthor = a.some(item => item.name == name)
-
-        if(!filterAuthor){
-            if(Object.keys(req.body.name).length !== 0){
-                const newAuthor = await prisma.author.create({
-                    data:{name} 
-                })
-                res.status(200).json({message:"Author has been added.",author:newAuthor})
-            }else{
-                res.status(400).json(`All fields are required.`)
-            }
-        }else{
-             res.status(400).json(`Author with this id already exists.`)
-        }
+      if (author) {
+        res.status(200).json({ message: "Author has been updated.", author });
+      } else {
+        res.status(404).json(`The id does not exist.`);
+      }
+    } else {
+      res.status(400).json(`All fields are required.`);
     }
-    catch(error){
-        res.status(400).json({error:error.message || "There was an error."})
+  } catch (error) {
+    res.status(500).json({ error: error.message || "There was an error." });
+  }
+};
+
+exports.deleteAuthor = async (req, res) => {
+  try {
+    const id = await req.params.id;
+
+    const author = await prisma.author.delete({
+      where: {
+        id: Number(id),
+      },
+    });
+
+    if (author) {
+      res.status(200).json({ message: "Author has been deleted.", author });
+    } else {
+      res.status(404).json(`The id does not exist.`);
     }
-}
-
-exports.getAuthor = async (req,res) =>{
-    try{
-        const id = await req.params.id
-
-        const author = await prisma.author.findUnique({
-            where:{
-                id:Number(id)
-            },
-            include:{
-                quotes:true
-            }
-        })
-
-        if(author){
-            res.status(200).json({message:`Author id ${id}`,author:author})
-        }else{
-            res.status(404).json(`The id does not exist.`)
-        }
-    }
-    catch(error){
-        res.status(404).json({error:error.message || "There was an error."})
-    }
-}
-
-exports.updateAuthor = async (req,res) =>{
-    try{
-        const id = await req.params.id
-
-        if(Object.keys(req.body.name).length !== 0){
-                const author = await prisma.author.update({
-                    data:req.body,
-                    where:{
-                        id:Number(id)
-                    }
-                })
-
-                if(author){
-                    res.status(200).json({message:"Author has been updated.",author})
-                }else{
-                    res.status(404).json(`The id does not exist.`)
-                }
-
-            }else{
-                res.status(400).json(`All fields are required.`)
-            }
-        
-        
-    }
-    catch(error){
-        res.status(500).json({error:error.message || "There was an error."})
-    }
-}
-
-exports.deleteAuthor = async (req,res) =>{
-    try{
-        const id = await req.params.id
-
-        const author = await prisma.author.delete({
-            where:{
-                id:Number(id)
-            }
-        })
-
-        if(author){
-            res.status(200).json({message:"Author has been deleted.",author})
-        }else{
-            res.status(404).json(`The id does not exist.`)
-        }
-
-    }
-    catch(error){
-        res.status(500).json({error:error.message || "There was an error."})
-    }
-}
+  } catch (error) {
+    res.status(500).json({ error: error.message || "There was an error." });
+  }
+};
