@@ -5,7 +5,6 @@ const validateJoi = require("../helpers/validateJoi")
 const authorSchema = require("../helpers/authorSchema")
 const authenticate = require("../helpers/authenticate")
 
-
 router.get("/",authorController.getAuthors)
 router.post("/",[authenticate,validateJoi(authorSchema)],authorController.addAuthor)
 router.get("/:id",authorController.getAuthor)
