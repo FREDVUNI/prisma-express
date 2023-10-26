@@ -1,6 +1,7 @@
 const { PrismaClient } = require("@prisma/client");
 const prisma = new PrismaClient();
 const JWT = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
 
 const getUsers = async (req, res) => {
   try {
@@ -14,8 +15,12 @@ const getUsers = async (req, res) => {
 const createUser = async (req, res) => {
   try {
     const { username, password } = req.body;
+
+    const salt =  bcrypt.genSaltSync(10);
+    const hashPassword = bcrypt.hashSync(password,salt)
+
     const newUser = await prisma.user.create({
-      data: { username, password },
+      data: { username, password:hashPassword },
     });
     res.status(200).json({
       message: "User has been added.",
