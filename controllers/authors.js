@@ -16,26 +16,23 @@ exports.addAuthor = async (req, res) => {
   try {
     const { name } = req.body;
 
-    const a = await prisma.author.findMany({});
-
-    const filterAuthor = a.some((item) => item.name == name);
-
-    if (!filterAuthor) {
-      if (Object.keys(req.body.name).length !== 0) {
-        const newAuthor = await prisma.author.create({
-          data: { name },
-        });
-        res
-          .status(200)
-          .json({ message: "Author has been added.", author: newAuthor });
-      } else {
-        res.status(400).json(`All fields are required.`);
-      }
-    } else {
-      res.status(400).json(`Author with this id already exists.`);
-    }
+    const author = await prisma.author.findUnique({
+      where: {
+        name: name,
+      },
+    });
+    if (!author)
+      return res.status(403).json({
+        error: "Author already exists.",
+      });
+    const newAuthor = await prisma.author.create({
+      data: { name },
+    });
+    res
+      .status(200)
+      .json({ message: "Author has been added.", author: newAuthor });
   } catch (error) {
-    res.status(400).json({ error: error.message || "There was an error." });
+    res.status(500).json({ error: error.message || "There was an error." });
   }
 };
 
@@ -66,21 +63,17 @@ exports.updateAuthor = async (req, res) => {
   try {
     const id = await req.params.id;
 
-    if (Object.keys(req.body.name).length !== 0) {
-      const author = await prisma.author.update({
-        data: req.body,
-        where: {
-          id: Number(id),
-        },
-      });
+    const author = await prisma.author.update({
+      data: req.body,
+      where: {
+        id: Number(id),
+      },
+    });
 
-      if (author) {
-        res.status(200).json({ message: "Author has been updated.", author });
-      } else {
-        res.status(404).json(`The id does not exist.`);
-      }
+    if (author) {
+      res.status(200).json({ message: "Author has been updated.", author });
     } else {
-      res.status(400).json(`All fields are required.`);
+      res.status(404).json(`The id does not exist.`);
     }
   } catch (error) {
     res.status(500).json({ error: error.message || "There was an error." });
