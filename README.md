@@ -51,7 +51,14 @@ This Rest API has the following endpoints:
 ### `/users`
 
 - `GET`: Get all users
+
+### `/users/signup`
+
 - `POST`: Create a new user
+
+### `/users/signin`
+
+- `POST`: login user
 
 ### `/users/:id`
 
