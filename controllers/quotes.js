@@ -16,29 +16,22 @@ exports.addQuote = async (req, res) => {
   try {
     const { text, authorId } = req.body;
 
-    const q = await prisma.quote.findMany({});
-    // console.log(q.filter(item => item.text == text))
+    const quote = await prisma.quote.findUnique({
+      where: {
+        text: text,
+      },
+    });
 
-    const filterQuotes = q.some((item) => item.text == text);
+    if (!quote)
+      return res.status(403).json({
+        error: "Quote already exists.",
+      });
 
-    if (!filterQuotes) {
-      if (
-        Object.keys(req.body.text).length !== 0 ||
-        Object.keys(req.body.authorId).length !== 0
-      ) {
-        const newQuote = await prisma.quote.create({
-          data: { text, authorId },
-        });
+    const newQuote = await prisma.quote.create({
+      data: { text, authorId },
+    });
 
-        res
-          .status(200)
-          .json({ message: "Quote has been added.", quote: newQuote });
-      } else {
-        res.status(400).json(`All fields are required.`);
-      }
-    } else {
-      res.status(400).json(`Quote with this id already exists.`);
-    }
+    res.status(200).json({ message: "Quote has been added.", quote: newQuote });
   } catch (error) {
     res.status(400).json({ error: error.message || "There was an error." });
   }
@@ -70,23 +63,16 @@ exports.updateQuote = async (req, res) => {
   try {
     const id = await req.params.id;
 
-    if (
-      Object.keys(req.body.text).length !== 0 ||
-      Object.keys(req.body.authorId).length !== 0
-    ) {
-      const quote = await prisma.quote.update({
-        data: req.body,
-        where: {
-          id: Number(id),
-        },
-      });
-      if (quote) {
-        res.status(200).json({ message: "Quote has been updated.", quote });
-      } else {
-        res.status(404).json(`The id does not exist.`);
-      }
+    const quote = await prisma.quote.update({
+      data: req.body,
+      where: {
+        id: Number(id),
+      },
+    });
+    if (quote) {
+      res.status(200).json({ message: "Quote has been updated.", quote });
     } else {
-      res.status(400).json(`All fields are required.`);
+      res.status(404).json(`The id does not exist.`);
     }
   } catch (error) {
     res.status(500).json({ error: error.message || "There was an error." });
