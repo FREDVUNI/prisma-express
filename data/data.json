@@ -1,0 +1,104 @@
+{
+  "details": "All quotes",
+  "data": [
+    {
+      "id": 1,
+      "text": "The greatest glory in living lies not in never falling, but in rising every time we fall.",
+      "authorId": 1,
+      "author": {
+        "id": 1,
+        "name": "Nelson Mandela"
+      }
+    },
+    {
+      "id": 2,
+      "text": "The way to get started is to quit talking and begin doing.",
+      "authorId": 2,
+      "author": {
+        "id": 2,
+        "name": "Walt Disney"
+      }
+    },
+    {
+      "id": 3,
+      "text": "Your time is limited, so don't waste it living someone else's life. Don't be trapped by dogma – which is living with the results of other people's thinking.",
+      "authorId": 3,
+      "author": {
+        "id": 3,
+        "name": "Steve Jobs"
+      }
+    },
+    {
+      "id": 4,
+      "text": "If life were predictable it would cease to be life, and be without flavor.",
+      "authorId": 4,
+      "author": {
+        "id": 4,
+        "name": "Eleanor Roosevelt"
+      }
+    },
+    {
+      "id": 5,
+      "text": "If you look at what you have in life, you'll always have more. If you look at what you don't have in life, you'll never have enough.",
+      "authorId": 5,
+      "author": {
+        "id": 5,
+        "name": "Oprah Winfrey"
+      }
+    },
+    {
+      "id": 6,
+      "text": "If you set your goals ridiculously high and it's a failure, you will fail above everyone else's success.",
+      "authorId": 6,
+      "author": {
+        "id": 6,
+        "name": "James Cameron"
+      }
+    },
+    {
+      "id": 7,
+      "text": "Life is what happens when you're busy making other plans.",
+      "authorId": 7,
+      "author": {
+        "id": 7,
+        "name": "John Lennon"
+      }
+    },
+    {
+      "id": 8,
+      "text": "The future belongs to those who believe in the beauty of their dreams.",
+      "authorId": 4,
+      "author": {
+        "id": 4,
+        "name": "Eleanor Roosevelt"
+      }
+    },
+    {
+      "id": 9,
+      "text": "If you really look closely, most overnight successes took a long time.",
+      "authorId": 3,
+      "author": {
+        "id": 3,
+        "name": "Steve Jobs"
+      }
+    },
+    {
+      "id": 10,
+      "text": "You know you are on the road to success if you would do your job and not be paid for it.",
+      "authorId": 5,
+      "author": {
+        "id": 5,
+        "name": "Oprah Winfrey"
+      }
+    },
+    {
+      "id": 11,
+      "text": "You become what you believe.",
+      "authorId": 5,
+      "author": {
+        "id": 5,
+        "name": "Oprah Winfrey"
+      }
+    }
+  ]
+}
