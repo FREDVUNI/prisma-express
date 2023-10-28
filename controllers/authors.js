@@ -21,7 +21,7 @@ exports.addAuthor = async (req, res) => {
         name: name,
       },
     });
-    if (!author)
+    if (author)
       return res.status(403).json({
         error: "Author already exists.",
       });
