@@ -7,7 +7,7 @@ const authenticate = require("../helpers/authenticate")
 
 router.get("/",authorController.getAuthors)
 router.post("/",[authenticate,validateJoi(authorSchema)],authorController.addAuthor)
-router.get("/:id",authorController.getAuthor)
+router.get("/:id",authenticate,authorController.getAuthor)
 router.patch("/:id",[authenticate,validateJoi(authorSchema)],authorController.updateAuthor)
 router.delete("/:id",authenticate,authorController.deleteAuthor)
 
