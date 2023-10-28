@@ -22,7 +22,7 @@ exports.addQuote = async (req, res) => {
       },
     });
 
-    if (!quote)
+    if (quote)
       return res.status(403).json({
         error: "Quote already exists.",
       });
