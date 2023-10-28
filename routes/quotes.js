@@ -5,9 +5,9 @@ const validateJoi = require("../helpers/validateJoi")
 const quoteSchema = require("../helpers/quoteSchema")
 const authenticate = require("../helpers/authenticate")
 
-router.get("/",quotesController.getQuotes)
+router.get("/",authenticate,quotesController.getQuotes)
 router.post("/",[authenticate,validateJoi(quoteSchema)],quotesController.addQuote)
-router.get("/:id",quotesController.getQuote)
+router.get("/:id",authenticate,quotesController.getQuote)
 router.patch("/:id",[authenticate,validateJoi(quoteSchema)],quotesController.updateQuote)
 router.delete("/:id",authenticate,quotesController.deleteQuote)
 
