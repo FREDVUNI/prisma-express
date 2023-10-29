@@ -6,9 +6,11 @@ exports.getQuotes = async (req, res) => {
     const quotes = await prisma.quote.findMany({
       include: { author: true },
     });
-    res.status(200).json({ message: "All quotes", data: quotes });
+    return res.status(200).json({ message: "All quotes", data: quotes });
   } catch (error) {
-    res.status(404).json({ error: error.message || "There was an error." });
+    return res
+      .status(404)
+      .json({ error: error.message || "There was an error." });
   }
 };
 
@@ -31,9 +33,13 @@ exports.addQuote = async (req, res) => {
       data: { text, authorId },
     });
 
-    res.status(200).json({ message: "Quote has been added.", quote: newQuote });
+    return res
+      .status(200)
+      .json({ message: "Quote has been added.", quote: newQuote });
   } catch (error) {
-    res.status(400).json({ error: error.message || "There was an error." });
+    return res
+      .status(400)
+      .json({ error: error.message || "There was an error." });
   }
 };
 
@@ -50,12 +56,14 @@ exports.getQuote = async (req, res) => {
     });
 
     if (quote) {
-      res.status(200).json({ message: `Quote id ${id}`, quote });
+      return res.status(200).json({ message: `Quote id ${id}`, quote });
     } else {
-      res.status(404).json(`The id does not exist.`);
+      return res.status(404).json(`The id does not exist.`);
     }
   } catch (error) {
-    res.status(404).json({ error: error.message || "There was an error." });
+    return res
+      .status(404)
+      .json({ error: error.message || "There was an error." });
   }
 };
 
@@ -70,9 +78,11 @@ exports.updateQuote = async (req, res) => {
       },
     });
     if (quote) {
-      res.status(200).json({ message: "Quote has been updated.", quote });
+      return res
+        .status(200)
+        .json({ message: "Quote has been updated.", quote });
     } else {
-      res.status(404).json(`The id does not exist.`);
+      return res.status(404).json(`The id does not exist.`);
     }
   } catch (error) {
     res.status(500).json({ error: error.message || "There was an error." });
@@ -89,11 +99,15 @@ exports.deleteQuote = async (req, res) => {
     });
 
     if (quote) {
-      res.status(200).json({ message: "Quote has been deleted.", quote });
+      return res
+        .status(200)
+        .json({ message: "Quote has been deleted.", quote });
     } else {
-      res.status(404).json(`The id does not exist.`);
+      return res.status(404).json(`The id does not exist.`);
     }
   } catch (error) {
-    res.status(500).json({ error: error.message || "There was an error." });
+    return res
+      .status(500)
+      .json({ error: error.message || "There was an error." });
   }
 };
