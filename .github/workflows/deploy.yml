@@ -1,4 +1,4 @@
-name: Continuous deployment
+name: Continuous Deployment
 
 on:
   push:
@@ -13,15 +13,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: 14
+      - name: Install Render CLI
+        run: |
+          curl -o- https://render.com/deploy | bash
+          export PATH=$PATH:$HOME/.render
+        shell: bash
 
-      - name: Install dependencies
-        run: npm install
+      - name: Login to Render
+        run: render login --token ${{ secrets.RENDER_TOKEN }}
+        env:
+          RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
 
       - name: Deploy to Render
-        run: |
-          render login --token ${{ secrets.RENDER_TOKEN }}
-          render up
+        run: render up
