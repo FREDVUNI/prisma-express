@@ -1,21 +1,27 @@
-name: Continuous Deployment
+name: Continuous deployment
 
 on:
   push:
-    branches: [main]
-  
+    branches:
+      - main
 
 jobs:
-  deploy-to-production:
+  deploy:
     runs-on: ubuntu-latest
-    
+
     steps:
-      - name: Checkout code and add it to CI server
+      - name: Checkout code
         uses: actions/checkout@v2
-      
-      - name: Setup heroku deploy action
-        uses: akhileshns/heroku-deploy@v3.12.12
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-          heroku_app_name: "prisma-node-express"
-          heroku_email: "fredvuni809@gmail.com" 
+          node-version: 14
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Deploy to Render
+        run: |
+          render login --token ${{ secrets.RENDER_TOKEN }}
+          render up
