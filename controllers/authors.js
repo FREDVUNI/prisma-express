@@ -6,9 +6,11 @@ exports.getAuthors = async (req, res) => {
     const authors = await prisma.author.findMany({
       include: { quotes: true },
     });
-    res.status(200).json({ message: "All authors", data: authors });
+    return res.status(200).json({ message: "All authors", data: authors });
   } catch (error) {
-    res.status(404).json({ error: error.message || "There was an error." });
+    return res
+      .status(404)
+      .json({ error: error.message || "There was an error." });
   }
 };
 
@@ -28,7 +30,7 @@ exports.addAuthor = async (req, res) => {
     const newAuthor = await prisma.author.create({
       data: { name },
     });
-    res
+    return res
       .status(200)
       .json({ message: "Author has been added.", author: newAuthor });
   } catch (error) {
@@ -50,12 +52,16 @@ exports.getAuthor = async (req, res) => {
     });
 
     if (author) {
-      res.status(200).json({ message: `Author id ${id}`, author: author });
+      return res
+        .status(200)
+        .json({ message: `Author id ${id}`, author: author });
     } else {
-      res.status(404).json(`The id does not exist.`);
+      return res.status(404).json(`The id does not exist.`);
     }
   } catch (error) {
-    res.status(404).json({ error: error.message || "There was an error." });
+    return res
+      .status(404)
+      .json({ error: error.message || "There was an error." });
   }
 };
 
@@ -71,12 +77,16 @@ exports.updateAuthor = async (req, res) => {
     });
 
     if (author) {
-      res.status(200).json({ message: "Author has been updated.", author });
+      return res
+        .status(200)
+        .json({ message: "Author has been updated.", author });
     } else {
-      res.status(404).json(`The id does not exist.`);
+      return res.status(404).json(`The id does not exist.`);
     }
   } catch (error) {
-    res.status(500).json({ error: error.message || "There was an error." });
+    return res
+      .status(500)
+      .json({ error: error.message || "There was an error." });
   }
 };
 
@@ -91,11 +101,15 @@ exports.deleteAuthor = async (req, res) => {
     });
 
     if (author) {
-      res.status(200).json({ message: "Author has been deleted.", author });
+      return res
+        .status(200)
+        .json({ message: "Author has been deleted.", author });
     } else {
-      res.status(404).json(`The id does not exist.`);
+      return res.status(404).json(`The id does not exist.`);
     }
   } catch (error) {
-    res.status(500).json({ error: error.message || "There was an error." });
+    return res
+      .status(500)
+      .json({ error: error.message || "There was an error." });
   }
 };
