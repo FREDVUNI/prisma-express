@@ -17,7 +17,6 @@ jobs:
         run: |
           curl -o- https://render.com/deploy | bash
           export PATH=$PATH:$HOME/.render
-        shell: bash
 
       - name: Login to Render
         run: render login --token ${{ secrets.RENDER_TOKEN }}
