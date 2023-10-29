@@ -2,49 +2,30 @@ name: Continuous Integration
 
 on:
   pull_request:
-    branches: [main]
-
-env:
-  DATABASE_URL: postgresql://postgres:vuni@localhost:5432/quotesdb?schema=public    
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      postgres:
-        image: postgres:14-alpine
-        env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: vuni
-          POSTGRES_DB: quotesdb
-        ports:
-          - 5432:5432
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5    
-
     steps:
-      - name: checkout code into runner
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: setup node on the runner
-        uses: actions/setup-node@v1
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
         with:
-          node-version: 14 
+          node-version: 14
 
       - name: Install project dependencies
         run: npm ci
+
+      - name: Set up Render environment variables
+        run: echo "DATABASE_URL=${{ secrets.RENDER_DATABASE_URL }}" >> .env
 
       - name: Run database migration files
         run: npm run db-migrate
 
       - name: Run unit tests
         run: npm test
-
-
-
-
-
