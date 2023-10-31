@@ -13,11 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Render CLI
-        run: |
-          curl -o- https://render.com/deploy | bash
-          export PATH=$PATH:$HOME/.render
-
       - name: Login to Render
         run: render login --token ${{ secrets.RENDER_TOKEN }} 
         env:
