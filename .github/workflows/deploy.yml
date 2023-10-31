@@ -19,7 +19,7 @@ jobs:
           export PATH=$PATH:$HOME/.render
 
       - name: Login to Render
-        run: render login --token ${{ secrets.RENDER_TOKEN }}
+        run: render login --token ${{ secrets.RENDER_TOKEN }} 
         env:
           RENDER_TOKEN: ${{ secrets.RENDER_TOKEN }}
 
