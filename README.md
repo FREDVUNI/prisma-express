@@ -65,3 +65,7 @@ This Rest API has the following endpoints:
 - `GET`: Get a specific user
 - `PUT`: Update a specific user
 - `DELETE`: Delete a specific user
+
+### Render
+
+https://prisma-express-n397.onrender.com/
