@@ -20,7 +20,7 @@ Before running this Rest API, you need to have the following installed on your m
    - DATABASE_URL: URL to your PostgresQL database
    - PORT: Port number for the server to run on
 5. Run `npx prisma migrate dev` to apply the database schema to your database
-6. Run `npm run dev` to start the server
+6. Run `npm start` to start the server
 
 ## Endpoints
 
